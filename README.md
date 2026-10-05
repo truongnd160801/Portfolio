@@ -11,3 +11,4 @@ Static site: one `index.html` plus image folders. No build step.
 Run locally: open `index.html`, or run `python3 -m http.server 8000` in this folder and visit http://localhost:8000.
 
 Hosting: GitHub Pages, branch `main`, folder `/ (root)`.
+# Portfolio
