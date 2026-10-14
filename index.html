@@ -4005,6 +4005,81 @@ footer.end{background:#0b0b0d}
 .lx-haze,.lx-atmo,.lx-sun,.lx-planet,.lx-aura,.lx-core{will-change:transform}
 .lx-wave{will-change:contents}
 
+/* ===== Experience: silk light behind glass cards ===== */
+.fx-silk i{position:absolute;border-radius:50%;pointer-events:none;filter:blur(1.5px)}
+.fx-silk .s1{left:-35%;width:170%;height:900px;top:16%;transform:rotate(-9deg);box-shadow:inset 0 2px 0 rgba(255,255,255,.18),inset 0 60px 120px -40px rgba(225,228,240,.16);animation:silk1 26s ease-in-out infinite alternate}
+.fx-silk .s2{left:-25%;width:160%;height:760px;top:44%;transform:rotate(7deg);box-shadow:inset 0 2px 0 rgba(255,255,255,.24),inset 0 80px 140px -50px rgba(235,237,246,.2);animation:silk2 32s ease-in-out infinite alternate}
+.fx-silk .s3{right:-40%;width:120%;height:620px;top:4%;transform:rotate(16deg);box-shadow:inset 0 1px 0 rgba(255,255,255,.12),inset 0 50px 100px -40px rgba(220,224,236,.12);animation:silk1 38s -8s ease-in-out infinite alternate}
+.fx-silk .s4{left:20%;width:70%;height:420px;top:58%;background:radial-gradient(closest-side,rgba(255,255,255,.08),transparent);filter:blur(30px)}
+@keyframes silk1{to{transform:rotate(-5deg) translate(4%,-3%)}}
+@keyframes silk2{to{transform:rotate(3deg) translate(-5%,2%)}}
+
+.xp{border-top:0;display:grid;gap:16px}
+.xp>li{padding:clamp(24px,2.8vw,36px) clamp(22px,2.8vw,40px)!important;border:0;border-radius:26px;isolation:isolate;
+  background:linear-gradient(140deg,rgba(58,58,66,.5),rgba(20,20,24,.72) 45%,rgba(28,28,33,.66));
+  -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14),0 30px 60px -36px rgba(0,0,0,.9);transition:opacity .5s,transform .45s cubic-bezier(.2,.8,.2,1),box-shadow .4s}
+/* glowing rim: bright on the top-left, fading round the card */
+.xp>li::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;z-index:-1;
+  background:linear-gradient(135deg,rgba(255,255,255,.75),rgba(255,255,255,.12) 30%,rgba(255,255,255,.05) 60%,rgba(255,255,255,.4));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:.55;transition:opacity .4s}
+.xp>li::before{left:-1px;top:22px;bottom:22px}
+.xp>li:hover{transform:translateY(-3px);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 40px 80px -36px rgba(0,0,0,.9),0 0 60px -20px rgba(var(--glow),.25)}
+.xp>li:hover::after{opacity:1}
+.xp>li:hover .xp-i{transform:none}
+.xp .xp-t li{padding:6px 12px;border:0;border-radius:999px;color:#e4e5ee;position:relative;
+  background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.14),inset 0 1px 0 rgba(255,255,255,.22),0 6px 16px -8px rgba(0,0,0,.7)}
+.xp .xp-t li:hover{padding-left:12px;background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,.06))}
+@media (max-width:860px){.xp>li:hover{padding-left:22px}}
+@media (prefers-reduced-motion: reduce){.fx-silk i{animation:none!important}}
+
+/* --- Experience v2: real frosted glass, border-following highlight, calmer hover --- */
+/* the list's fade-in used opacity/transform on the parent, which stops the cards from blurring what is behind them */
+#experience .xp.rv,#experience .xp.rv.in,#experience .xp.pre{opacity:1!important;transform:none!important}
+.xp>li{background:linear-gradient(140deg,rgba(255,255,255,.07),rgba(255,255,255,.02) 50%,rgba(255,255,255,.04));
+  -webkit-backdrop-filter:blur(34px) saturate(160%) brightness(.78);backdrop-filter:blur(34px) saturate(160%) brightness(.78);
+  transition:opacity .6s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.16,1,.3,1),box-shadow .7s cubic-bezier(.16,1,.3,1),background .6s}
+.xp.focus>li{opacity:.5}
+/* hover highlight travels along the rounded border instead of a straight bar */
+.xp>li::before{content:"";position:absolute;inset:0;left:0;top:0;bottom:0;width:auto;border-radius:inherit;padding:1.5px;z-index:-1;
+  background:conic-gradient(from 200deg at 50% 50%,rgba(255,255,255,0) 0deg,rgba(255,255,255,.95) 60deg,rgba(255,255,255,.35) 110deg,rgba(255,255,255,0) 170deg,rgba(255,255,255,0) 360deg);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+  box-shadow:none;transform:none;opacity:0;filter:drop-shadow(0 0 6px rgba(var(--glow),.6));transition:opacity .7s cubic-bezier(.16,1,.3,1)}
+.xp>li:hover::before{transform:none;opacity:1}
+.xp>li:hover{transform:translateY(-2px);background:linear-gradient(140deg,rgba(255,255,255,.1),rgba(255,255,255,.03) 50%,rgba(255,255,255,.05))}
+.xp>li .role,.xp>li .xp-i,.xp>li .xp-i::after{transition:color .6s,text-shadow .6s,background .6s,box-shadow .6s}
+@media (max-width:860px){.xp>li:hover{padding-left:clamp(22px,2.8vw,40px)!important}}
+
+/* --- glass cards over patterned sections: blur and dim what is behind instead of letting the pattern show through --- */
+#toolkit .tk-caps.rv,#toolkit .tk-caps.rv.in,#toolkit .tk-tools.rv,#toolkit .tk-tools.rv.in,#team .tm.rv,#team .tm.rv.in{opacity:1!important;transform:none!important}
+.tkc,.tk-tools li,.tm-side{background:linear-gradient(150deg,rgba(255,255,255,.07),rgba(255,255,255,.02) 55%,rgba(255,255,255,.04)),rgba(14,14,17,.62)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(150%);backdrop-filter:blur(26px) saturate(150%)}
+.tkc:hover,.tk-tools li:hover{background:linear-gradient(150deg,rgba(255,255,255,.1),rgba(255,255,255,.03) 55%,rgba(255,255,255,.05)),rgba(16,16,19,.6)!important}
+
+/* "Also at Viettel": same shape and glass as the other cards */
+#work .vt{border-radius:26px!important;overflow:hidden;border:0!important;
+  background:linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.015) 55%,rgba(255,255,255,.035)),rgba(14,14,17,.62)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 30px 60px -36px rgba(0,0,0,.9)!important}
+#work .vt::after{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(135deg,rgba(255,255,255,.5),rgba(255,255,255,.08) 30%,rgba(255,255,255,.04) 60%,rgba(255,255,255,.3));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);opacity:.5}
+
+/* "How I use AI": no outer box; intro on the left, the four points as cards on the right */
+.ai{background:none!important;border:0!important;box-shadow:none!important;padding:0!important;border-radius:0!important}
+.ai-grid div{border:0!important;border-radius:20px;padding:24px!important;position:relative;
+  background:linear-gradient(150deg,rgba(255,255,255,.06),rgba(255,255,255,.015) 55%,rgba(255,255,255,.035)),rgba(14,14,17,.55)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.09),inset 0 1px 0 rgba(255,255,255,.12);transition:transform .6s cubic-bezier(.16,1,.3,1),box-shadow .6s}
+.ai-grid div:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22),inset 0 1px 0 rgba(255,255,255,.18),0 20px 40px -24px rgba(var(--glow),.3)}
+.ai-grid div.own{box-shadow:inset 0 0 0 1px rgba(255,255,255,.3),inset 0 1px 0 rgba(255,255,255,.2),0 16px 40px -20px rgba(var(--glow),.45)}
+
+/* toolkit: keep the dot pattern out of the cards entirely */
+#toolkit .fx-dots.alt{-webkit-mask-image:radial-gradient(42% 34% at 92% 6%,#000,transparent 72%);mask-image:radial-gradient(42% 34% at 92% 6%,#000,transparent 72%)}
+.tkc,.tk-tools li{background:linear-gradient(150deg,rgba(255,255,255,.075),rgba(255,255,255,.02) 55%,rgba(255,255,255,.04)),rgba(13,13,16,.9)!important;
+  -webkit-backdrop-filter:blur(30px) saturate(150%);backdrop-filter:blur(30px) saturate(150%)}
+.tkc:hover,.tk-tools li:hover{background:linear-gradient(150deg,rgba(255,255,255,.1),rgba(255,255,255,.03) 55%,rgba(255,255,255,.05)),rgba(15,15,18,.9)!important}
+
 /* language switch */
 .nav-r{display:flex;align-items:center;gap:10px}
 .menu a{white-space:nowrap}
@@ -4230,7 +4305,7 @@ footer.end{background:#0b0b0d}
   </section>
 
   <section id="experience" aria-labelledby="xp-h">
-    <div class="bgfx fx-streaks"><svg class="fx-st" viewBox="0 0 600 1000" preserveAspectRatio="none" aria-hidden="true"><g stroke="#fff" vector-effect="non-scaling-stroke"><line x1="544.4" y1="394" x2="544.4" y2="976" stroke-width="0.7" stroke-opacity="0.26" class="g0"/><line x1="530.2" y1="417" x2="530.2" y2="986" stroke-width="1.6" stroke-opacity="0.17" class="g1"/><line x1="190.0" y1="250" x2="190.0" y2="632" stroke-width="0.7" stroke-opacity="0.11" class="g2"/><line x1="221.4" y1="437" x2="221.4" y2="1000" stroke-width="0.5" stroke-opacity="0.22" class="g0"/><line x1="354.0" y1="354" x2="354.0" y2="664" stroke-width="1.2" stroke-opacity="0.21" class="g1"/><line x1="383.8" y1="243" x2="383.8" y2="833" stroke-width="1.6" stroke-opacity="0.29" class="g2"/><line x1="281.3" y1="21" x2="281.3" y2="409" stroke-width="0.9" stroke-opacity="0.21" class="g0"/><line x1="562.0" y1="384" x2="562.0" y2="904" stroke-width="0.7" stroke-opacity="0.18" class="g1"/><line x1="598.0" y1="168" x2="598.0" y2="483" stroke-width="1.2" stroke-opacity="0.23" class="g2"/><line x1="559.3" y1="296" x2="559.3" y2="678" stroke-width="0.9" stroke-opacity="0.24" class="g0"/><line x1="456.5" y1="474" x2="456.5" y2="1000" stroke-width="1.2" stroke-opacity="0.36" class="g1"/><line x1="318.1" y1="69" x2="318.1" y2="540" stroke-width="0.9" stroke-opacity="0.26" class="g2"/><line x1="445.8" y1="211" x2="445.8" y2="933" stroke-width="0.9" stroke-opacity="0.23" class="g0"/><line x1="183.1" y1="157" x2="183.1" y2="481" stroke-width="1.6" stroke-opacity="0.18" class="g1"/><line x1="526.4" y1="500" x2="526.4" y2="951" stroke-width="1.2" stroke-opacity="0.20" class="g2"/><line x1="454.3" y1="296" x2="454.3" y2="897" stroke-width="1.2" stroke-opacity="0.29" class="g0"/><line x1="283.7" y1="396" x2="283.7" y2="1000" stroke-width="1.6" stroke-opacity="0.15" class="g1"/><line x1="250.4" y1="56" x2="250.4" y2="468" stroke-width="1.6" stroke-opacity="0.19" class="g2"/><line x1="507.7" y1="195" x2="507.7" y2="518" stroke-width="0.9" stroke-opacity="0.22" class="g0"/><line x1="448.8" y1="286" x2="448.8" y2="871" stroke-width="1.6" stroke-opacity="0.41" class="g1"/><line x1="456.5" y1="231" x2="456.5" y2="904" stroke-width="0.5" stroke-opacity="0.32" class="g2"/><line x1="367.3" y1="201" x2="367.3" y2="1000" stroke-width="0.7" stroke-opacity="0.27" class="g0"/><line x1="527.8" y1="310" x2="527.8" y2="845" stroke-width="0.9" stroke-opacity="0.25" class="g1"/><line x1="282.2" y1="274" x2="282.2" y2="917" stroke-width="0.9" stroke-opacity="0.20" class="g2"/><line x1="309.6" y1="483" x2="309.6" y2="1000" stroke-width="0.5" stroke-opacity="0.29" class="g0"/><line x1="431.7" y1="7" x2="431.7" y2="424" stroke-width="0.7" stroke-opacity="0.23" class="g1"/><line x1="241.4" y1="27" x2="241.4" y2="489" stroke-width="1.6" stroke-opacity="0.18" class="g2"/><line x1="535.3" y1="514" x2="535.3" y2="1000" stroke-width="0.7" stroke-opacity="0.17" class="g0"/><line x1="275.8" y1="506" x2="275.8" y2="922" stroke-width="1.2" stroke-opacity="0.22" class="g1"/><line x1="488.4" y1="75" x2="488.4" y2="949" stroke-width="0.5" stroke-opacity="0.23" class="g2"/><line x1="558.2" y1="61" x2="558.2" y2="872" stroke-width="0.7" stroke-opacity="0.20" class="g0"/><line x1="465.3" y1="65" x2="465.3" y2="608" stroke-width="1.2" stroke-opacity="0.33" class="g1"/><line x1="259.0" y1="355" x2="259.0" y2="848" stroke-width="0.7" stroke-opacity="0.24" class="g2"/><line x1="301.4" y1="495" x2="301.4" y2="1000" stroke-width="0.5" stroke-opacity="0.20" class="g0"/><line x1="299.7" y1="264" x2="299.7" y2="1000" stroke-width="1.6" stroke-opacity="0.20" class="g1"/><line x1="417.8" y1="356" x2="417.8" y2="978" stroke-width="0.9" stroke-opacity="0.36" class="g2"/><line x1="421.9" y1="129" x2="421.9" y2="1000" stroke-width="0.5" stroke-opacity="0.43" class="g0"/><line x1="329.2" y1="327" x2="329.2" y2="593" stroke-width="0.5" stroke-opacity="0.22" class="g1"/><line x1="373.5" y1="282" x2="373.5" y2="588" stroke-width="0.7" stroke-opacity="0.22" class="g2"/><line x1="374.4" y1="286" x2="374.4" y2="950" stroke-width="1.2" stroke-opacity="0.27" class="g0"/><line x1="342.6" y1="257" x2="342.6" y2="602" stroke-width="0.5" stroke-opacity="0.34" class="g1"/><line x1="521.0" y1="233" x2="521.0" y2="1000" stroke-width="0.7" stroke-opacity="0.31" class="g2"/><line x1="201.8" y1="203" x2="201.8" y2="559" stroke-width="1.6" stroke-opacity="0.12" class="g0"/><line x1="499.6" y1="169" x2="499.6" y2="780" stroke-width="0.7" stroke-opacity="0.32" class="g1"/><line x1="299.2" y1="50" x2="299.2" y2="871" stroke-width="0.5" stroke-opacity="0.17" class="g2"/><line x1="479.0" y1="225" x2="479.0" y2="848" stroke-width="1.2" stroke-opacity="0.35" class="g0"/><line x1="346.9" y1="40" x2="346.9" y2="436" stroke-width="0.5" stroke-opacity="0.31" class="g1"/><line x1="598.0" y1="361" x2="598.0" y2="938" stroke-width="0.9" stroke-opacity="0.22" class="g2"/><line x1="404.0" y1="186" x2="404.0" y2="911" stroke-width="0.5" stroke-opacity="0.30" class="g0"/><line x1="496.1" y1="168" x2="496.1" y2="710" stroke-width="0.9" stroke-opacity="0.29" class="g1"/><line x1="186.5" y1="158" x2="186.5" y2="622" stroke-width="1.6" stroke-opacity="0.14" class="g2"/><line x1="515.9" y1="129" x2="515.9" y2="621" stroke-width="0.9" stroke-opacity="0.24" class="g0"/><line x1="337.8" y1="414" x2="337.8" y2="1000" stroke-width="1.2" stroke-opacity="0.25" class="g1"/><line x1="253.6" y1="281" x2="253.6" y2="1000" stroke-width="0.7" stroke-opacity="0.21" class="g2"/><line x1="550.2" y1="444" x2="550.2" y2="1000" stroke-width="0.5" stroke-opacity="0.19" class="g0"/><line x1="502.4" y1="283" x2="502.4" y2="906" stroke-width="1.2" stroke-opacity="0.35" class="g1"/><line x1="582.1" y1="410" x2="582.1" y2="724" stroke-width="0.5" stroke-opacity="0.15" class="g2"/><line x1="489.0" y1="468" x2="489.0" y2="782" stroke-width="0.7" stroke-opacity="0.31" class="g0"/><line x1="598.0" y1="219" x2="598.0" y2="935" stroke-width="1.6" stroke-opacity="0.19" class="g1"/><line x1="568.1" y1="176" x2="568.1" y2="730" stroke-width="0.9" stroke-opacity="0.19" class="g2"/><line x1="343.5" y1="279" x2="343.5" y2="1000" stroke-width="0.5" stroke-opacity="0.31" class="g0"/><line x1="275.7" y1="214" x2="275.7" y2="1000" stroke-width="0.5" stroke-opacity="0.24" class="g1"/><line x1="511.3" y1="462" x2="511.3" y2="1000" stroke-width="1.6" stroke-opacity="0.29" class="g2"/><line x1="171.0" y1="188" x2="171.0" y2="455" stroke-width="1.2" stroke-opacity="0.10" class="g0"/><line x1="510.7" y1="84" x2="510.7" y2="751" stroke-width="0.9" stroke-opacity="0.30" class="g1"/><line x1="366.8" y1="106" x2="366.8" y2="638" stroke-width="0.5" stroke-opacity="0.25" class="g2"/><line x1="196.8" y1="158" x2="196.8" y2="517" stroke-width="0.5" stroke-opacity="0.20" class="g0"/><line x1="460.5" y1="392" x2="460.5" y2="663" stroke-width="0.5" stroke-opacity="0.30" class="g1"/><line x1="384.4" y1="187" x2="384.4" y2="823" stroke-width="1.2" stroke-opacity="0.33" class="g2"/><line x1="505.8" y1="309" x2="505.8" y2="713" stroke-width="0.9" stroke-opacity="0.21" class="g0"/></g></svg></div>
+    <div class="bgfx fx-silk"><i class="s1"></i><i class="s2"></i><i class="s3"></i><i class="s4"></i></div>
     <div class="wrap">
       <div class="sh">
         <span class="sec-k"><i></i>03 / Experience</span>
