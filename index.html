@@ -3209,7 +3209,7 @@ body.pv-open{overflow:hidden}
 @media (max-width:760px){.tds .pv-sheet{grid-template-columns:1fr}}
 
 /* ===== Light-beam hero: a planet horizon with a steady glow; only the beam grows on scroll, whites out, then hands over ===== */
-.lx{position:relative;height:260vh;padding:0;background:var(--bg)}
+.lx{position:relative;height:370vh;padding:0;background:var(--bg)}
 .lx-stage{--p:0;--len:0;--lum:0;--glare:0;--g2:0;--fo:0;--out:0;--cut:0;--rev:0;--hz:68%;--tz:0px;position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;padding:76px 0 clamp(96px,14vh,170px);background:radial-gradient(120% 80% at 50% var(--hz),#111114 0%,#08080a 48%,#050506 100%)}
 @keyframes lxFade{from{opacity:0}}
 
@@ -3270,7 +3270,7 @@ body.pv-open{overflow:hidden}
 .lx-next .hero-bar{margin-top:clamp(20px,3vh,32px)}
 
 @media (max-width:760px){
-  .lx{height:220vh}
+  .lx{height:302vh}
   .lx .hero h1{font-size:clamp(33px,9.6vw,46px);max-width:13ch}
   .lx-stage{padding:72px 0 clamp(84px,13vh,140px)}
   .lx-lead{font-size:15px;margin-top:16px}
@@ -5155,6 +5155,28 @@ addEventListener('hashchange',route);route();
   addEventListener('scroll',on,{passive:true});addEventListener('resize',function(){geo();on();});
   /* returning from a case page: the hero was hidden, so measure again */
   addEventListener('hashchange',function(){setTimeout(function(){geo();on();},80);setTimeout(function(){geo();on();},400);});upd();
+  /* one gentle scroll plays the whole hero transition by itself, at a pace the eye can follow */
+  (function(){
+    var playing=false,ty0=null,root=document.documentElement;
+    function bounds(){var top=lx.getBoundingClientRect().top+scrollY;return {top:top,end:top+Math.max(1,lx.offsetHeight-innerHeight)};}
+    function ease(x){return -(Math.cos(Math.PI*x)-1)/2;}
+    function down(x){var J=.23;return x<J?.5*(1-Math.cos(Math.PI/2*x/J)):.5+.5*Math.sin(Math.PI/2*(x-J)/(1-J));}   // beam: quick; flash: slower
+    function play(to,dur,curve){playing=true;var from=scrollY,t0=performance.now(),prev=root.style.scrollBehavior,f=curve||ease;root.style.scrollBehavior='auto';
+      (function step(now){var k=Math.min(1,(now-t0)/dur);scrollTo(0,from+(to-from)*f(k));if(k<1)requestAnimationFrame(step);else{root.style.scrollBehavior=prev;setTimeout(function(){playing=false;},120);}})(t0);}
+    function decide(dir,e){
+      if(document.getElementById('detail')&&!document.getElementById('detail').hidden)return;
+      var b=bounds(),y=scrollY;if(y<b.top-2||y>b.end-2)return;   // only inside the hero's scroll range
+      if(playing){e.preventDefault();return;}
+      if(dir>0&&y<b.end-8){e.preventDefault();var left=(b.end-y)/(b.end-b.top);if(left>.85)play(b.end,1950,down);else play(b.end,700+1800*left);}
+      else if(dir<0&&y>b.top+4){e.preventDefault();var done=(y-b.top)/(b.end-b.top);play(b.top,300+550*done);}
+    }
+    addEventListener('wheel',function(e){if(Math.abs(e.deltaY)<2)return;decide(e.deltaY>0?1:-1,e);},{passive:false});
+    addEventListener('touchstart',function(e){ty0=e.touches[0].clientY;},{passive:true});
+    addEventListener('touchmove',function(e){if(ty0===null)return;var dy=ty0-e.touches[0].clientY;if(Math.abs(dy)<10){if(playing)e.preventDefault();return;}decide(dy>0?1:-1,e);ty0=null;},{passive:false});
+    addEventListener('touchend',function(){ty0=null;},{passive:true});
+    addEventListener('keydown',function(e){var k=e.key;if(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))return;
+      if(k==='ArrowDown'||k==='PageDown'||(k===' '&&!e.shiftKey))decide(1,e);else if(k==='ArrowUp'||k==='PageUp'||(k===' '&&e.shiftKey))decide(-1,e);});
+  })();
 })();
 </script>
 <script>
