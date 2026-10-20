@@ -3,12 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="Nguyễn Duy Trường — Product Designer. Case studies in retail and F&amp;B workflows, design systems and AI-assisted product design.">
+<title>Nguyễn Duy Trường — Product Designer</title>
+<meta name="description" content="Nguyễn Duy Trường — Product Designer in Hanoi. Case studies in retail and F&amp;B workflows, design systems and AI-assisted product design.">
+<link rel="canonical" href="https://truongnd160801.github.io/Portfolio/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Nguyễn Duy Trường">
 <meta property="og:title" content="Nguyễn Duy Trường — Product Designer">
 <meta property="og:description" content="Case studies in retail and F&amp;B workflows, design systems and AI-assisted product design.">
-<meta property="og:type" content="website">
-<meta property="og:image" content="covers/retail.jpg">
+<meta property="og:url" content="https://truongnd160801.github.io/Portfolio/">
+<meta property="og:image" content="https://truongnd160801.github.io/Portfolio/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="I design pretty screens easy-to-use products. Nguyễn Duy Trường, Product Designer in Hanoi">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b0b0d">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Nguyễn Duy Trường","jobTitle":"Product Designer","address":{"@type":"PostalAddress","addressLocality":"Hanoi","addressCountry":"VN"},"email":"mailto:dtruongdesign.forwork@gmail.com","url":"https://truongnd160801.github.io/Portfolio/","sameAs":["https://www.linkedin.com/in/trgnd1608"]}</script>
 </head>
 <body>
 <title>Nguyễn Duy Trường</title>
@@ -5546,6 +5557,15 @@ addEventListener('hashchange',vtRoute);route();
       scrollTo(0,about.getBoundingClientRect().top+scrollY);root.style.scrollBehavior=pb;b.classList.add('off');
       var f=about.querySelector('h2');if(f){f.setAttribute('tabindex','-1');f.focus({preventScroll:true});}});
   }
+})();
+/* tab title follows the page you are on */
+(function(){
+  var base=document.title||'Nguyễn Duy Trường — Product Designer';
+  function upd(){var d=document.getElementById('detail');
+    if(location.hash.indexOf('#p-')===0&&d&&!d.hidden){var h=d.querySelector('h1');var t=h?h.textContent.replace(/\s+/g,' ').trim():'';document.title=t?t+' · Nguyễn Duy Trường':base;}
+    else document.title=base;}
+  addEventListener('hashchange',function(){setTimeout(upd,80);});setTimeout(upd,300);
+  var dd=document.getElementById('detail');if(dd&&'MutationObserver' in window)new MutationObserver(upd).observe(dd,{childList:true,attributes:true,attributeFilter:['hidden']});
 })();
 
 </script>
